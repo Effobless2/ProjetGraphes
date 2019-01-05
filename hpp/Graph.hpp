@@ -15,7 +15,7 @@ class Graph{
         Graph(Noeud<I,C>* node);
         ~Graph();
 
-        std::vector<Noeud<I,C>*> getNodes(){return nodes;}
+        std::vector<Noeud<I,C>*> getNodes() const {return nodes;}
 
         void addNoeud(Noeud<I,C> *node);
         void removeNoeud(Noeud<I,C>* node);
@@ -23,7 +23,10 @@ class Graph{
         void addPath(Noeud<I,C>* begin, Noeud<I,C>* end, C cost);
 
         void affiche();
-        friend std::ostream& operator << (std::ostream& os, Graph * const & g);
+        template <class I2, class C2>
+            friend std::ostream& operator << (
+                std::ostream &os, 
+                const Graph<I2,C2> & g);
 
 };
 
@@ -77,7 +80,17 @@ void Graph<I,C>::addPath(Noeud<I,C>* begin, Noeud<I,C>* end, C cost){
 
 template<class I, class C>
 void Graph<I,C>::affiche(){
-    std::cout << this << std::endl;
+    std::cout << *this << std::endl;
 }
 
+template<class I, class C>
+std::ostream& operator << (std::ostream &os, const Graph<I,C> & g){
+    os << "{ ";
+    std::vector<Noeud<I,C>*> vec = g.getNodes();
+    for (typename std::vector<Noeud<I,C>*>::iterator it = vec.begin(); it != vec.end(); it++){
+        os << (*it)->get_numero() << " , ";
+    }
+    os << "}" << std::endl;
+    return os;
+}
 #endif

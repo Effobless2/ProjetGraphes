@@ -21,7 +21,10 @@ class Noeud{
         
         void addPath(Noeud<I,C>* node, C cost);
         void removePath(Noeud<I,C>* node);
-        friend std::ostream & operator << (std::ostream& os, Noeud<I,C> * const & node);
+        template <class I2, class C2>
+            friend std::ostream & operator << (
+                std::ostream &os, 
+                const Noeud<I2,C2> &node);
 
 };
 
@@ -53,7 +56,7 @@ void Noeud<I,C>::removePath(Noeud<I,C>* node){
 }
 
 template<class I, class C>
-std::ostream& operator << (std::ostream& os, Noeud<I,C> * const & node){
+std::ostream& operator << (std::ostream &os,const Noeud<I,C> &node){
     os << node->get_numero() << "{ \n";
     std::vector<std::tr1::tuple<Noeud<I,C>*, int> > vec = node->getNeighbours();
     for (typename std::vector<std::tr1::tuple<Noeud<I,C>*, int> >::iterator it = vec.begin(); it != vec.end(); it++){
@@ -63,5 +66,7 @@ std::ostream& operator << (std::ostream& os, Noeud<I,C> * const & node){
     os << "}" << std::endl;
     return os;
 }
+
+
 
 #endif

@@ -26,6 +26,12 @@ int main(){
 
     Graph<int, int>* graph = new Graph<int,int>(vec);
 
+
+    graph->affiche();
+    std::cout << std::endl;
+
+    std::cout << *graph << std::endl;
+
     
     delete graph;
     return 0;
