@@ -48,7 +48,8 @@ void Noeud<I,C>::addPath(Noeud<I,C>* node, C cost){
 
 template<class I, class C>
 void Noeud<I,C>::removePath(Noeud<I,C>* node){
-    for(typename std::vector<std::tr1::tuple<Noeud<I,C>*, C> >::iterator it = neighbours.begin(); it != neighbours.end(); it++){
+    std::vector<std::tr1::tuple<Noeud<I,C>*, C> > vec = neighbours;
+    for(typename std::vector<std::tr1::tuple<Noeud<I,C>*, C> >::iterator it = vec.begin(); it != vec.end(); it++){
         if (std::tr1::get<0>(*it) == node){
             neighbours.erase(it);
         }

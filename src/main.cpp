@@ -27,11 +27,29 @@ int main(){
     Graph<int, int>* graph = new Graph<int,int>(vec);
 
 
+
+    /////Tests/////
+    //Affichage
     graph->affiche();
-    std::cout << std::endl;
 
-    std::cout << *graph << std::endl;
+    //Ajout de noeud et suppression
+    Noeud <int, int> *nTest = new Noeud<int, int>(100);
+    graph->addNoeud(nTest);
+    graph->affiche();
+    graph->removeNoeud(nTest);
+    graph->affiche();
 
+    //Ajout de chemin et suppression
+    std::cout << n1->getNeighbours().size() << std::endl;
+    std::cout << n2->getNeighbours().size() << std::endl;
+    graph->addPath(n1, n2, 5);
+    std::cout << n1->getNeighbours().size() << std::endl;
+    std::cout << n2->getNeighbours().size() << std::endl;
+    graph->removePath(n1,n2);
+    std::cout << n1->getNeighbours().size() << std::endl;
+    std::cout << n2->getNeighbours().size() << std::endl;
+
+    delete nTest;
     
     delete graph;
     return 0;

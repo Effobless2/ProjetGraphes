@@ -79,6 +79,12 @@ void Graph<I,C>::addPath(Noeud<I,C>* begin, Noeud<I,C>* end, C cost){
 }
 
 template<class I, class C>
+void Graph<I,C>::removePath(Noeud<I,C>* n1, Noeud<I,C>* n2){
+    n1->removePath(n2);
+    n2->removePath(n1);
+}
+
+template<class I, class C>
 void Graph<I,C>::affiche(){
     std::cout << *this << std::endl;
 }
