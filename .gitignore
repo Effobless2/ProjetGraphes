@@ -3,3 +3,5 @@ obj/*
 out/*
 
 gmon.out
+
+.vscode/*

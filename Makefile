@@ -10,7 +10,7 @@ OBJF := obj/
 
 OUT := out/
 
-OBJS := $(OBJF)main.o $(OBJF)Graph.o
+OBJS := $(OBJF)main.o $(OBJF)Graph.o $(OBJF)Noeud.o
 
 # Compilation rules
 
