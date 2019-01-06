@@ -32,6 +32,8 @@ int main(){
     //Affichage
     graph->affiche();
 
+    std::cout << *n1 << std::endl;
+
     //Ajout de noeud et suppression
     Noeud <int, int> *nTest = new Noeud<int, int>(100);
     graph->addNoeud(nTest);
@@ -40,14 +42,14 @@ int main(){
     graph->affiche();
 
     //Ajout de chemin et suppression
-    std::cout << n1->getNeighbours().size() << std::endl;
-    std::cout << n2->getNeighbours().size() << std::endl;
+    std::cout << *n1 << std::endl;
+    std::cout << *n2 << std::endl;
     graph->addPath(n1, n2, 5);
-    std::cout << n1->getNeighbours().size() << std::endl;
-    std::cout << n2->getNeighbours().size() << std::endl;
+    std::cout << *n1 << std::endl;
+    std::cout << *n2 << std::endl;
     graph->removePath(n1,n2);
-    std::cout << n1->getNeighbours().size() << std::endl;
-    std::cout << n2->getNeighbours().size() << std::endl;
+    std::cout << *n1 << std::endl;
+    std::cout << *n2 << std::endl;
 
     delete nTest;
     
