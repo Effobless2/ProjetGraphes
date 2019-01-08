@@ -54,5 +54,6 @@ int main(){
     delete nTest;
     
     delete graph;
+
     return 0;
 }
