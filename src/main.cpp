@@ -1,4 +1,5 @@
 #include "../hpp/Graph.hpp"
+#include "../hpp/Tas.hpp"
 
 int main(){
     std::cout << "Hello World" << std::endl;
@@ -51,9 +52,38 @@ int main(){
     std::cout << *n1 << std::endl;
     std::cout << *n2 << std::endl;
 
+
+    Tas<int> *tasTest = new Tas<int>();
+    int t1 = 1;
+    int t2 = 2;
+    int t3 = 3;
+    int t4 = 4;
+    int t5 = 5;
+    int t6 = 6;
+    tasTest->ajout(&t6);
+    tasTest->ajout(&t5);
+    tasTest->ajout(&t4);
+    tasTest->ajout(&t3);
+    tasTest->ajout(&t2);
+    tasTest->ajout(&t1);
+
+    std::cout << *tasTest << std::endl; //1,3,2,6,4,5,
+
+    std::cout << *tasTest->outMin() << std::endl; //1
+
+    std::cout << *tasTest << std::endl; //2,3,5,6,4,
+
+    std::cout << tasTest->recherche(&t2) << std::endl; //true
+
+    std::cout << tasTest->recherche(&t1) << std::endl; // false
+    
+
+
     delete nTest;
     
     delete graph;
+
+    delete tasTest;
 
     return 0;
 }
