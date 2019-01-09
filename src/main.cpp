@@ -1,6 +1,12 @@
 #include "../hpp/Graph.hpp"
 #include "../hpp/Tas.hpp"
 
+
+
+int intComp(int i1, int i2){
+    return i1 < i2 ? 1 : 0;
+}
+
 int main(){
     std::cout << "Hello World" << std::endl;
 
@@ -53,13 +59,15 @@ int main(){
     std::cout << *n2 << std::endl;
 
 
-    Tas<int> *tasTest = new Tas<int>();
+    Tas<int, intComp> *tasTest = new Tas<int, intComp>();
     int t1 = 1;
     int t2 = 2;
     int t3 = 3;
     int t4 = 4;
     int t5 = 5;
     int t6 = 6;
+
+    //Ajout d'objets dans le tas
     tasTest->ajout(&t6);
     tasTest->ajout(&t5);
     tasTest->ajout(&t4);
@@ -69,10 +77,12 @@ int main(){
 
     std::cout << *tasTest << std::endl; //1,3,2,6,4,5,
 
+    //Extraction du min
     std::cout << *tasTest->outMin() << std::endl; //1
 
     std::cout << *tasTest << std::endl; //2,3,5,6,4,
 
+    //recherche d'éléments à l'intérieur
     std::cout << tasTest->recherche(&t2) << std::endl; //true
 
     std::cout << tasTest->recherche(&t1) << std::endl; // false
