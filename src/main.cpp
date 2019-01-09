@@ -1,5 +1,5 @@
 #include "../hpp/Graph.hpp"
-#include "../hpp/Tas.hpp"
+#include "../hpp/Tas_id.hpp"
 
 
 
@@ -58,6 +58,12 @@ int main(){
     std::cout << *n1 << std::endl;
     std::cout << *n2 << std::endl;
 
+    
+
+    delete nTest;
+    
+    delete graph;
+
 
     Tas<int, intComp> *tasTest = new Tas<int, intComp>();
     int t1 = 1;
@@ -87,13 +93,33 @@ int main(){
 
     std::cout << tasTest->recherche(&t1) << std::endl; // false
     
-
-
-    delete nTest;
-    
-    delete graph;
-
     delete tasTest;
+
+
+    Tas_Id<int, intComp> *tasTest2 = new Tas_Id<int, intComp>();
+
+
+    //Ajout d'objets dans le tas
+    tasTest2->ajout(&t5);
+    tasTest2->ajout(&t6);
+    tasTest2->ajout(&t4);
+    tasTest2->ajout(&t3);
+    tasTest2->ajout(&t2);
+    tasTest2->ajout(&t1);
+
+    std::cout << *tasTest2 << std::endl; //1,3,2,6,4,5,
+
+    //Extraction du min
+    std::cout << *tasTest2->outMin() << std::endl; //1
+
+    std::cout << *tasTest2 << std::endl; //2,3,5,6,4,
+
+    //recherche d'éléments à l'intérieur
+    std::cout << tasTest2->recherche(&t2) << std::endl; //true
+
+    std::cout << tasTest2->recherche(&t1) << std::endl; // false
+    
+    delete tasTest2;
 
     return 0;
 }

@@ -8,7 +8,7 @@
 
 template<class N, int compFunction(N,N)>
 class Tas{
-    private:
+    protected:
         std::vector<N*> tas;
     public:
         Tas();
@@ -19,8 +19,8 @@ class Tas{
 
         std::vector<N*> getTas() const {return tas;}
 
-        void ajout(N*);
-        N* outMin();
+        virtual void ajout(N*);
+        virtual N* outMin();
         bool recherche(N*);
 
         template<class N2, int comp(N2,N2)>
