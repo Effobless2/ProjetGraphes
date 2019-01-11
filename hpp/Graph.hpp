@@ -48,7 +48,7 @@ Graph<I,C>::Graph(Noeud<I,C>* node){
 
 template<class I, class C>
 Graph<I,C>::~Graph(){
-    for (std::vector<Noeud<int,int>*>::iterator it = nodes.begin(); it != nodes.end(); it++){
+    for (typename std::vector<Noeud<I,C>*>::iterator it = nodes.begin(); it != nodes.end(); it++){
         delete *it;
     }
 }

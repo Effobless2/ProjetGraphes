@@ -8,9 +8,13 @@ int intComp(int i1, int i2){
     return i1 < i2 ? 1 : 0;
 }
 
+int tupleCompare(std::tr1::tuple<Noeud<char,int>*,int> i1,std::tr1::tuple<Noeud<char,int>*,int> i2){
+    return std::tr1::get<1>(i1) < std::tr1::get<1>(i2) ? 1 : 0;
+}
+
 int main(){
     std::cout << "Hello World" << std::endl;
-
+    /*
     Noeud<int, int> *n1 = new Noeud<int, int>(1);
     Noeud<int, int> *n2 = new Noeud<int, int>(2);
     Noeud<int, int> *n3 = new Noeud<int, int>(3);
@@ -121,6 +125,40 @@ int main(){
     std::cout << tasTest2->recherche(&t1) << std::endl; // false
     
     delete tasTest2;
+    */
+
+    Graph<char, int>* subject = new Graph<char,int>();
+
+    Noeud<char,int>* nodeA = new Noeud<char, int>('A');
+    Noeud<char,int>* nodeB = new Noeud<char, int>('B');
+    Noeud<char,int>* nodeC = new Noeud<char, int>('C');
+    Noeud<char,int>* nodeD = new Noeud<char, int>('D');
+    Noeud<char,int>* nodeE = new Noeud<char, int>('E');
+    Noeud<char,int>* nodeF = new Noeud<char, int>('F');
+    Noeud<char,int>* nodeG = new Noeud<char, int>('G');
+
+    subject->addNoeud(nodeA);
+    subject->addNoeud(nodeB);
+    subject->addNoeud(nodeC);
+    subject->addNoeud(nodeD);
+    subject->addNoeud(nodeE);
+    subject->addNoeud(nodeF);
+    subject->addNoeud(nodeG);
+
+    subject->addPath(nodeA, nodeB, 5);
+    subject->addPath(nodeA, nodeG, 1);
+    subject->addPath(nodeB, nodeG, 2);
+    subject->addPath(nodeC, nodeE, 7);
+    subject->addPath(nodeC, nodeF, 8);
+    subject->addPath(nodeD, nodeG, 32);
+    subject->addPath(nodeD, nodeF, 5);
+    subject->addPath(nodeE, nodeG, 3);
+
+    std::cout << *subject << std::endl;
+
+    Dijkstra<char,tupleCompare>(subject, nodeB);
+
+    delete subject;
 
     return 0;
 }

@@ -22,6 +22,8 @@ class Tas_Id : public Tas<N,compare>{
 
         void ajout(N*);
 
+        void updateTas(N*);
+
         N* outMin();
 
         template<class N2, int comp(N2,N2)>
@@ -48,8 +50,8 @@ Tas_Id<N,compare>::Tas_Id(N* node) : Tas<N,compare>::Tas(node){
 template<class N, int compare(N,N)>
 Tas_Id<N,compare>::Tas_Id(std::vector<N*> vec) : Tas<N,compare>::Tas(vec){
     dico = std::map<N, int>();
-    for(int it = 0; it < vec.size(); it++){
-        dico[vec[it]] = it;
+    for(int it = 0; it < Tas<N,compare>::tas.size(); it++){
+        dico[Tas<N,compare>::tas[it]] = it;
     }
     
 }
@@ -123,6 +125,29 @@ N* Tas_Id<N,compare>::outMin(){
     return result;
 }
 
+
+template<class N, int compare(N,N)>
+void Tas_Id<N,compare>::updateTas(N* updated){
+    
+    int curId = dico[updated];
+
+    int curParent = (curId - 1) / 2;
+
+
+    while(curParent >=0){
+        if (compare(*Tas<N,compare>::tas[curId],*Tas<N,compare>::tas[curParent])){
+            std::swap(Tas<N,compare>::tas[curId], Tas<N,compare>::tas[curParent]);
+            dico[Tas<N,compare>::tas[curId]] = curId;
+            dico[Tas<N,compare>::tas[curParent]] = curParent;
+            
+            curId = curParent;
+            curParent = (curId - 1) / 2;
+        }
+        else {
+            break;
+        }
+    }
+}
 
 
 template<class N, int compare(N,N)>

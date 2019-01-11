@@ -23,6 +23,8 @@ class Tas{
         virtual N* outMin();
         bool recherche(N*);
 
+        bool isEmpty();
+
         template<class N2, int comp(N2,N2)>
             friend std::ostream& operator << (
                 std::ostream &os,
@@ -42,7 +44,10 @@ Tas<N,compFunction>::Tas(N* first){
 
 template<class N, int compFunction(N,N)>
 Tas<N,compFunction>::Tas(std::vector<N*> _tas){
-    tas = _tas;
+    tas = std::vector<N*>();
+    for (typename std::vector<N*>::iterator it = _tas.begin(); it != _tas.end(); it++){
+        ajout(*it);
+    }
 }
 
 
@@ -148,6 +153,11 @@ std::ostream& operator << (std::ostream &os, const Tas<N, compFunction> &tas){
     }
     os << std::endl;
     return os;
+}
+
+template<class N, int compFunction(N,N)>
+bool Tas<N, compFunction>::isEmpty(){
+    return tas.size() == 0 ? true : false;
 }
 
 #endif
