@@ -38,6 +38,10 @@ void Dijkstra(Graph<I,int>* graph, Noeud<I,int>* src){
 	std::tr1::tuple<Noeud<I,int>*,int>* choice;
 
 	while(!tas_id.isEmpty()){
+		/*
+			Le programme arriver à traîter le premier noeud (dans notre exemple G) mais n'arrive pas à récupérer le prochain noeud, erreur de taille
+			Aussi la màj pour les valeurs ne se fait pas, dans l'exemple lorsqu'on extrait G on est censé modifié la valeur de A mais là rien
+		*/
 		std::cout << "****Traitement de" << std::endl;
 		choice = tas_id.outMin();
 
@@ -51,6 +55,7 @@ void Dijkstra(Graph<I,int>* graph, Noeud<I,int>* src){
 		std::vector< std::tr1::tuple<Noeud<I,int>*, int> > voisinsMin = noeudMin->getNeighbours();
 
 		std::cout << "***Traitement des voisins" << std::endl;
+
 		for( typename std::vector< std::tr1::tuple<Noeud<I,int>*, int> >::iterator it = voisinsMin.begin(); it != voisinsMin.end(); it++){
 			std::cout << "**Traitement du voisin" << std::endl;
 			Noeud<I, int>* noeudVoisin = std::tr1::get<0>(*it);
