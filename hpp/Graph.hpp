@@ -60,9 +60,9 @@ void Graph<I,C>::addNoeud(Noeud<I,C> *node){
 
 template<class I, class C>
 void Graph<I,C>::removeNoeud(Noeud<I,C>* node){
-    std::vector<std::tr1::tuple<Noeud<I,C>*, C> > vec = node->getNeighbours();
-    for (typename std::vector<std::tr1::tuple<Noeud<I,C>*, C> >::iterator it = vec.begin(); it != vec.end(); it++){
-        std::tr1::get<0>(*it)->removePath(node);
+    std::vector< std::pair< Noeud<I,C>*, C > > vec = node->getNeighbours();
+    for (typename std::vector< std::pair< Noeud<I,C>*, C > >::iterator it = vec.begin(); it != vec.end(); it++){
+        ((it)->first)->removePath(node);
     }
     for (typename std::vector<Noeud<I,C>*>::iterator it = nodes.begin(); it != nodes.end(); it++){
         if (node == *it){
