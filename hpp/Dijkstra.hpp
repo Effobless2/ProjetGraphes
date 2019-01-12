@@ -7,50 +7,57 @@
 #include <iostream>
 #include <map>
 
-template<class I, int compare(std::tr1::tuple<Noeud<I,int>*,int>,std::tr1::tuple<Noeud<I,int>*,int>)>
+template< class I, int compare( std::pair<Noeud<I,int>*, int>, std::pair<Noeud<I,int>*, int> ) >
 void Dijkstra(Graph<I,int>* graph, Noeud<I,int>* src){
 
 	int INFINITY = 100000;
 
 	std::cout << "***** INIT *****" << std::endl;
+	// Map (Noeud, distance) des résultats de l'algo
 	std::map<Noeud<I,int>*, int> result = std::map<Noeud<I,int>*,int>();
 
-	std::map<Noeud<I,int>*, std::tr1::tuple<Noeud<I,int>*, int>*> tmp = std::map<Noeud<I,int>*, std::tr1::tuple<Noeud<I,int>*, int>*>();
+	std::map< Noeud<I,int>*, std::pair<Noeud<I,int>*, int>* > tmp = std::map< Noeud<I,int>*, std::pair<Noeud<I,int>*, int>* >(); 
 
-	//Tas_Id<std::tr1::tuple<Noeud<I,int>*, int>, compare> tas_id = Tas_Id(src->getNeighbours());
-	Tas_Id<std::tr1::tuple<Noeud<I,int>*, int>, compare> tas_id = Tas_Id<std::tr1::tuple<Noeud<I,int>*, int>, compare>();
+	Tas_Id< std::pair<Noeud<I,int>*, int>, compare> tas_id = Tas_Id< std::pair<Noeud<I,int>*, int>, compare >();
 	
 	std::vector< Noeud<I, int>* > nodes = graph->getNodes();
 	for (typename std::vector<Noeud<I,int>*>::iterator it = nodes.begin(); it != nodes.end(); it++){
+		std::cout << "\nTAS : " << tas_id.getSize() << " | DICO : " << tas_id.getSizeDico() << std::endl;
 		if (*it == src){
-			std::tr1::tuple<Noeud<I,int>*, int> curTuple = std::tr1::tuple<Noeud<I,int>*, int>((*it), 0);
-			tmp[*it] = &curTuple;
-			tas_id.ajout(&curTuple);
+			std::cout << "     on a le source" << std::endl;
+			std::pair<Noeud<I,int>*, int> curPair = std::make_pair(*it, 0);
+			tmp[*it] = &curPair;
+			tas_id.ajout(&curPair);
 
 		} else{
-			std::tr1::tuple<Noeud<I,int>*, int> curTuple = std::tr1::tuple<Noeud<I,int>*, int>((*it), INFINITY);
-			tmp[*it] = &curTuple;
-			tas_id.ajout(&curTuple);
+			std::pair<Noeud<I,int>*, int> curPair = std::make_pair(*it, INFINITY);
+			tmp[*it] = &curPair;
+			tas_id.ajout(&curPair);
 		}
 	}
 
-	std::cout << "***** BOUCLE *****" << std::endl;
-	std::tr1::tuple<Noeud<I,int>*,int>* choice;
 
+	std::cout << "\n\n***** BOUCLE *****" << std::endl;
+	std::pair< Noeud<I,int>*, int>* choice;
+	//std::tr1::tuple<Noeud<I,int>*,int>* choice;
+
+	int i = 0;
 	while(!tas_id.isEmpty()){
-		/*
-			Le programme arriver à traîter le premier noeud (dans notre exemple G) mais n'arrive pas à récupérer le prochain noeud, erreur de taille
-			Aussi la màj pour les valeurs ne se fait pas, dans l'exemple lorsqu'on extrait G on est censé modifié la valeur de A mais là rien
-		*/
-		std::cout << "****Traitement de" << std::endl;
-		choice = tas_id.outMin();
+		std::cout << i << "[BEFORE] TAS : " << tas_id.getSize() << " | DICO : " << tas_id.getSizeDico() << std::endl;
+		choice = tas_id.outMin(); // c'est bien un std::pair
+		std::cout << i << "[AFTER] TAS : " << tas_id.getSize() << " | DICO : " << tas_id.getSizeDico() << std::endl;
 
-		Noeud<I, int>* noeudMin = std::tr1::get<0>(*choice);
-		int poidMin = std::tr1::get<1>(*choice);
 
+		//Noeud<I, int>* noeudMin = std::tr1::get<0>(*choice);
+		Noeud<I, int>* noeudMin = choice->first;
+		//int poidMin = std::tr1::get<1>(*choice);
+		int poidMin = choice->second; // Ca on arrive à le recup
+		std::cout << "Poid : " << poidMin << std::endl;
+
+		std::cout << i << "****Traitement de" << std::endl;
 		std::cout << *noeudMin << std::endl;
 		
-		result[noeudMin] = poidMin;
+		/*result[noeudMin] = poidMin;
 		
 		std::vector< std::tr1::tuple<Noeud<I,int>*, int> > voisinsMin = noeudMin->getNeighbours();
 
@@ -78,6 +85,7 @@ void Dijkstra(Graph<I,int>* graph, Noeud<I,int>* src){
 				tas_id.updateTas(curTuple);
 			}
 		}*/
+		i++;
 	}
 
 	/*for (typename std::map<Noeud<I,int>*, int>::iterator it = result.begin(); it != result.end(); it++){

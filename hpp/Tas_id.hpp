@@ -24,6 +24,9 @@ class Tas_Id : public Tas<N,compare>{
 
         void updateTas(N*);
 
+        int getSize() const { return Tas<N,compare>::tas.size(); }
+        int getSizeDico() const { return dico.size(); }
+
         N* outMin();
 
         template<class N2, int comp(N2,N2)>
@@ -63,17 +66,21 @@ Tas_Id<N,compare>::~Tas_Id(){
 
 template<class N, int compare(N,N)>
 void Tas_Id<N,compare>::ajout(N* newElem){
+    std::cout << "on ajoute" << std::endl;
     Tas<N,compare>::tas.push_back(newElem);
     dico[newElem] = Tas<N,compare>::tas.size()-1;
 
     int curId = Tas<N,compare>::tas.size() - 1;
+    std::cout << curId << std::endl;
 
     int curParent = (curId - 1) / 2;
-
+    std::cout << curParent << std::endl;
 
     while(curParent >=0){
+        std::cout << "in while" << std::endl;
         if (compare(*Tas<N,compare>::tas[curId],*Tas<N,compare>::tas[curParent])){
             std::swap(Tas<N,compare>::tas[curId], Tas<N,compare>::tas[curParent]);
+            std::cout << "         ca bouge" << std::endl;
             dico[Tas<N,compare>::tas[curId]] = curId;
             dico[Tas<N,compare>::tas[curParent]] = curParent;
             
@@ -167,5 +174,6 @@ std::ostream& operator << (std::ostream &os, Tas_Id<N,compare> &tas){
     
     return os;
 }
+
 
 #endif

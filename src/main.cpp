@@ -8,8 +8,9 @@ int intComp(int i1, int i2){
     return i1 < i2 ? 1 : 0;
 }
 
-int tupleCompare(std::tr1::tuple<Noeud<char,int>*,int> i1,std::tr1::tuple<Noeud<char,int>*,int> i2){
-    return std::tr1::get<1>(i1) < std::tr1::get<1>(i2) ? 1 : 0;
+int pairCompare( std::pair<Noeud<char,int>*, int> p1, std::pair<Noeud<char,int>*, int> p2){
+    return p1.second < p2.second ? 1 : 0;
+    //return std::tr1::get<1>(i1) < std::tr1::get<1>(i2) ? 1 : 0;
 }
 
 int main(){
@@ -127,6 +128,7 @@ int main(){
     delete tasTest2;
     */
 
+    
     Graph<char, int>* subject = new Graph<char,int>();
 
     Noeud<char,int>* nodeA = new Noeud<char, int>('A');
@@ -136,6 +138,8 @@ int main(){
     Noeud<char,int>* nodeE = new Noeud<char, int>('E');
     Noeud<char,int>* nodeF = new Noeud<char, int>('F');
     Noeud<char,int>* nodeG = new Noeud<char, int>('G');
+
+
 
     subject->addNoeud(nodeA);
     subject->addNoeud(nodeB);
@@ -156,7 +160,7 @@ int main(){
 
     std::cout << *subject << std::endl;
 
-    Dijkstra<char,tupleCompare>(subject, nodeB);
+    Dijkstra<char,pairCompare>(subject, nodeB);
 
     delete subject;
 
