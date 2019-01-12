@@ -8,10 +8,10 @@ int intComp(int i1, int i2){
     return i1 < i2 ? 1 : 0;
 }
 
-int pairCompare( std::pair<Noeud<char,int>*, int> p1, std::pair<Noeud<char,int>*, int> p2){
+/*int pairCompare( std::pair<Noeud<char,int>*, int> p1, std::pair<Noeud<char,int>*, int> p2){
     return p1.second < p2.second ? 1 : 0;
     //return std::tr1::get<1>(i1) < std::tr1::get<1>(i2) ? 1 : 0;
-}
+}*/
 
 int main(){
     std::cout << "Hello World" << std::endl;
@@ -160,7 +160,7 @@ int main(){
 
     std::cout << *subject << std::endl;
 
-    Dijkstra<char,pairCompare>(subject, nodeB);
+    Dijkstra<char>(subject, nodeB);
 
     delete subject;
 

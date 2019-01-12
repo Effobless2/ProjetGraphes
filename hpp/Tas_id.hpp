@@ -66,6 +66,7 @@ Tas_Id<N,compare>::~Tas_Id(){
 
 template<class N, int compare(N,N)>
 void Tas_Id<N,compare>::ajout(N* newElem){
+    std::cout << newElem << std::endl;
     std::cout << "on ajoute" << std::endl;
     Tas<N,compare>::tas.push_back(newElem);
     dico[newElem] = Tas<N,compare>::tas.size()-1;

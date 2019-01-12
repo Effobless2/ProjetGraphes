@@ -84,4 +84,5 @@ std::ostream& operator << (std::ostream &os,const Noeud<I,C> &node){
 
 
 
+
 #endif
