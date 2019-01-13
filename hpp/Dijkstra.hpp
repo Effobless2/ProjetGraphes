@@ -14,7 +14,7 @@
 */
 
 template<class I>
-void Dijkstra(Graph<I,int>* graph, Noeud<I,int>* src){
+void Dijkstra(Graph<I,int>& graph, Noeud<I,int>* src){
 
 	// Valeur définie pour l'initialisation des noeuds dans l'algorithme
 	int INFINITY = 100000;
@@ -28,8 +28,8 @@ void Dijkstra(Graph<I,int>* graph, Noeud<I,int>* src){
 	// Tas contenant des paires (Noeud, distance) à traiter lors de l'algorithme
 	Tas_Id< ourPairs<Noeud<I,int>*, int>, pairCompare> tas_id = Tas_Id< ourPairs<Noeud<I,int>*, int>, pairCompare >();
 	
-	// Boucle afin d'initialiser les noeuds du graphe dans l'algorithme de Dijkstra
-	std::vector< Noeud<I, int>* > nodes = graph->getNodes();
+	// Boucle afin d'initialiser les ourPairs du tas dans l'algorithme de Dijkstra
+	std::vector< Noeud<I, int>* > nodes = graph.getNodes();
 	for (typename std::vector<Noeud<I,int>*>::iterator it = nodes.begin(); it != nodes.end(); it++){
 		// Si on a le noeud src on met son coût à 0 pour le traiter en premier, sinon on met les noeuds à un coût infini
 		if (*it == src){
@@ -45,12 +45,12 @@ void Dijkstra(Graph<I,int>* graph, Noeud<I,int>* src){
 		
 	}
 
-	// Représente le noeud le plus proche de source dans l'algorithme
+	// Représente la pair du noeud le plus proche de source dans l'algorithme
 	ourPairs< Noeud<I,int>*, int>* choice;
 
 	// Tant que le tas n'est pas vide, on applique l'algorithme
 	while(!tas_id.isEmpty()){
-		// On extrait le noeud le plus proche de source du tas
+		// On extrait la pair du noeud le plus proche de source du tas
 		choice = tas_id.outMin();
 
 		// Représente le noeud dans la paire extraite
@@ -64,11 +64,11 @@ void Dijkstra(Graph<I,int>* graph, Noeud<I,int>* src){
 		// On recupère les voisins du Noeud extrait afin de mettre à jour les distances si nécessaire
 		std::vector< std::pair<Noeud<I,int>*, int> > voisinsMin = noeudMin->getNeighbours();
 		for( typename std::vector< std::pair<Noeud<I,int>*, int> >::iterator it = voisinsMin.begin(); it != voisinsMin.end(); it++){
-			// Représent le noeud voisin traité
+			// Représente le noeud voisin à traiter
 			Noeud<I, int>* noeudVoisin = (*it).first;
 
-			// On recupère la paire du noeud depuis tmp
-			ourPairs<Noeud<I,int>*, int>* tupleVoisin = tmp[(*it).first];
+			// On recupère la paire du noeud du voisin à traiter depuis tmp
+			ourPairs<Noeud<I,int>*, int>* tupleVoisin = tmp[noeudVoisin];
 
 			// Si la distance est plus petite alors on met à jour, sinon rien
 			if (tupleVoisin->second > it->second + choice->second){
@@ -84,9 +84,7 @@ void Dijkstra(Graph<I,int>* graph, Noeud<I,int>* src){
 	for (typename std::map<Noeud<I,int>*, int>::iterator it = result.begin(); it != result.end(); it++){
 		std::cout << ((*it).first)->get_numero() << " : " << (*it).second << std::endl;
 		delete tmp[it->first];
-	}
-
-	
+	}	
 }
 
 

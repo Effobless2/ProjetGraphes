@@ -24,9 +24,9 @@ class Graph{
         void addNoeud(Noeud<I,C> *node);
         // Retirer un noeud dans le graphe
         void removeNoeud(Noeud<I,C>* node);
-        // Retirer une arête du graphe
+        // Retirer une arête du graphe bidirectionnelle
         void removePath(Noeud<I,C>*, Noeud<I,C>*);
-        // Ajouter une arête dans le graph des noeuds begin à end avec un coût de cost
+        // Ajouter une arête bidirectionnelle dans le graph des noeuds begin et end avec un coût de cost
         void addPath(Noeud<I,C>* begin, Noeud<I,C>* end, C cost);
         // Affiche le graphe
         void affiche();

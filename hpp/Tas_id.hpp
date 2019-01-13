@@ -114,7 +114,7 @@ N* Tas_Id<N,compare>::outMin(){
     if (Tas<N,compare>::tas.size() > 2){
         int curNode = 0;
 
-        int nextToCompare = compare(*Tas<N,compare>::tas[1],*Tas<N,compare>::tas[2]) ? 1 : 2;
+        unsigned int nextToCompare = compare(*Tas<N,compare>::tas[1],*Tas<N,compare>::tas[2]) ? 1 : 2;
         while(nextToCompare < Tas<N,compare>::tas.size()){
             if (compare((*Tas<N,compare>::tas[nextToCompare]),(*Tas<N,compare>::tas[curNode]))){
                 std::swap(Tas<N,compare>::tas[nextToCompare], Tas<N,compare>::tas[curNode]);

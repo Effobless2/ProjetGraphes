@@ -44,7 +44,7 @@ int main(){
 
     std::cout << "Le graphe : " << *subject << std::endl;
 
-    Dijkstra<char>(subject, nodeA);
+    Dijkstra<char>(*subject, nodeA);
 
     delete subject;
 

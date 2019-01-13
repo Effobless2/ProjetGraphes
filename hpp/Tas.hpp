@@ -98,7 +98,7 @@ N* Tas<N,compFunction>::outMin(){
     if (tas.size() > 1){
         int curNode = 0;
 
-        int nextToCompare = compFunction(*tas[1],*tas[2]) ? 1 : 2;
+        unsigned int nextToCompare = compFunction(*tas[1],*tas[2]) ? 1 : 2;
         while(nextToCompare < tas.size()){
             if (tas[curNode] > tas[nextToCompare]){
                 std::swap(tas[nextToCompare], tas[curNode]);
