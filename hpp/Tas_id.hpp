@@ -96,12 +96,13 @@ N* Tas_Id<N,compare>::outMin(){
     Tas<N,compare>::tas.erase(Tas<N,compare>::tas.end()-1);
     dico.erase(result);
     
-    if (Tas<N,compare>::tas.size() > 1){
+    dico[Tas<N,compare>::tas[0]] = 0;
+    if (Tas<N,compare>::tas.size() > 2){
         int curNode = 0;
 
         int nextToCompare = compare(*Tas<N,compare>::tas[1],*Tas<N,compare>::tas[2]) ? 1 : 2;
         while(nextToCompare < Tas<N,compare>::tas.size()){
-            if (Tas<N,compare>::tas[curNode] > Tas<N,compare>::tas[nextToCompare]){
+            if (compare((*Tas<N,compare>::tas[nextToCompare]),(*Tas<N,compare>::tas[curNode]))){
                 std::swap(Tas<N,compare>::tas[nextToCompare], Tas<N,compare>::tas[curNode]);
                 dico[Tas<N,compare>::tas[curNode]] = curNode;
                 dico[Tas<N,compare>::tas[nextToCompare]] = nextToCompare;
@@ -130,8 +131,9 @@ N* Tas_Id<N,compare>::outMin(){
 
 template<class N, int compare(N,N)>
 void Tas_Id<N,compare>::updateTas(N* updated){
-    
     int curId = dico[updated];
+
+    std::cout << *updated << std::endl;
 
     int curParent = (curId - 1) / 2;
     std::cout << "\t Place : " << curId << std::endl;

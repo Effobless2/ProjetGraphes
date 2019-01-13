@@ -131,15 +131,15 @@ int main(){
     
     Graph<char, int>* subject = new Graph<char,int>();
 
-    Noeud<char,int>* nodeA = new Noeud<char, int>('A');
-    Noeud<char,int>* nodeB = new Noeud<char, int>('B');
-    Noeud<char,int>* nodeC = new Noeud<char, int>('C');
-    Noeud<char,int>* nodeD = new Noeud<char, int>('D');
-    Noeud<char,int>* nodeE = new Noeud<char, int>('E');
-    Noeud<char,int>* nodeF = new Noeud<char, int>('F');
-    Noeud<char,int>* nodeG = new Noeud<char, int>('G');
-
-
+    Noeud<char,int>* nodeA = new Noeud<char, int>('1');
+    Noeud<char,int>* nodeB = new Noeud<char, int>('2');
+    Noeud<char,int>* nodeC = new Noeud<char, int>('3');
+    Noeud<char,int>* nodeD = new Noeud<char, int>('4');
+    Noeud<char,int>* nodeE = new Noeud<char, int>('5');
+    Noeud<char,int>* nodeF = new Noeud<char, int>('6');
+    Noeud<char,int>* nodeG = new Noeud<char, int>('7');
+    Noeud<char,int>* nodeH = new Noeud<char, int>('8');
+    Noeud<char,int>* nodeI = new Noeud<char, int>('9');
 
     subject->addNoeud(nodeA);
     subject->addNoeud(nodeB);
@@ -148,19 +148,28 @@ int main(){
     subject->addNoeud(nodeE);
     subject->addNoeud(nodeF);
     subject->addNoeud(nodeG);
+    subject->addNoeud(nodeH);
+    subject->addNoeud(nodeI);
 
-    subject->addPath(nodeA, nodeB, 5);
-    subject->addPath(nodeA, nodeG, 1);
-    subject->addPath(nodeB, nodeG, 2);
-    subject->addPath(nodeC, nodeE, 7);
-    subject->addPath(nodeC, nodeF, 8);
-    subject->addPath(nodeD, nodeG, 32);
-    subject->addPath(nodeD, nodeF, 5);
-    subject->addPath(nodeE, nodeG, 3);
+
+    subject->addPath(nodeA, nodeB, 4);
+    subject->addPath(nodeA, nodeH, 8);
+    subject->addPath(nodeB, nodeC, 8);
+    subject->addPath(nodeB, nodeH, 11);
+    subject->addPath(nodeC, nodeD, 7);
+    subject->addPath(nodeC, nodeI, 2);
+    subject->addPath(nodeC, nodeF, 4);
+    subject->addPath(nodeD, nodeE, 9);
+    subject->addPath(nodeD, nodeF, 14);
+    subject->addPath(nodeE, nodeF, 10);
+    subject->addPath(nodeF, nodeG, 2);
+    subject->addPath(nodeG, nodeH, 1);
+    subject->addPath(nodeG, nodeI, 6);
+    subject->addPath(nodeI, nodeH, 7);
 
     std::cout << *subject << std::endl;
 
-    Dijkstra<char>(subject, nodeB);
+    Dijkstra<char>(subject, nodeA);
 
     delete subject;
 
