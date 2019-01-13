@@ -4,23 +4,29 @@
 
 #include <iostream>
 #include <vector>
-#include <tr1/tuple>
 
-//using namespace std;
 template<class I, class C>
 class Noeud{
     private:
+        // Liste d'adjacence représentée par un vector de (Noeud, coût) pour chaque voisins du noeud
         std::vector< std::pair< Noeud<I,C>*, C > > neighbours;
+        // Identifiant du noeud
         I id;
     public:
+        // CONSTRUCTOR
         Noeud(I ident);
+        // DESTRUCTOR
         ~Noeud();
 
+        // Recupère les voisins du noeud
         std::vector< std::pair< Noeud<I,C>*, C > > getNeighbours() const { return neighbours; }
+        // Recupère l'identifiant du noeud
         I get_numero() const { return id; }
-        
+        // Ajoute un chemin entre ce noeud et le noeud node avec un coût cost
         void addPath(Noeud<I,C>* node, C cost);
+        // Retire un chemin vers le noeud node
         void removePath(Noeud<I,C>* node);
+        // Surcharge de l'opérateur <<
         template <class I2, class C2>
             friend std::ostream& operator << (
                 std::ostream &os, 
@@ -55,12 +61,6 @@ void Noeud<I,C>::removePath(Noeud<I,C>* node){
             neighbours.erase(it);
         }
     }
-
-    /*for(typename std::vector<std::tr1::tuple<Noeud<I,C>*, C> >::iterator it = vec.begin(); it != vec.end(); it++){
-        if (std::tr1::get<0>(*it) == node){
-            neighbours.erase(it);
-        }
-    }*/
 }
 
 template<class I, class C>
@@ -72,12 +72,7 @@ std::ostream& operator << (std::ostream &os,const Noeud<I,C> &node){
     for( typename std::vector< std::pair< Noeud<I,C>*, C > >::iterator it = vec.begin() ; it != vec.end() ; it++){
         os << " \r{ " << (it->first)->get_numero() << " : " << it->second << "} \n";
     }
-
-
-    /*for (typename std::vector<std::tr1::tuple<Noeud<I,C>*, int> >::iterator it = vec.begin(); it != vec.end(); it++){
-        os << "      { " << std::tr1::get<0>(*it)->get_numero() << " : " << std::tr1::get<1>(*it) << " }, \n";
-    }*/
-
+    
     os << "}" << std::endl;
     return os;
 }
