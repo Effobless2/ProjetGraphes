@@ -66,22 +66,16 @@ Tas_Id<N,compare>::~Tas_Id(){
 
 template<class N, int compare(N,N)>
 void Tas_Id<N,compare>::ajout(N* newElem){
-    std::cout << newElem << std::endl;
-    std::cout << "on ajoute" << std::endl;
     Tas<N,compare>::tas.push_back(newElem);
     dico[newElem] = Tas<N,compare>::tas.size()-1;
 
     int curId = Tas<N,compare>::tas.size() - 1;
-    std::cout << curId << std::endl;
 
     int curParent = (curId - 1) / 2;
-    std::cout << curParent << std::endl;
 
     while(curParent >=0){
-        std::cout << "in while" << std::endl;
         if (compare(*Tas<N,compare>::tas[curId],*Tas<N,compare>::tas[curParent])){
             std::swap(Tas<N,compare>::tas[curId], Tas<N,compare>::tas[curParent]);
-            std::cout << "         ca bouge" << std::endl;
             dico[Tas<N,compare>::tas[curId]] = curId;
             dico[Tas<N,compare>::tas[curParent]] = curParent;
             
@@ -98,13 +92,11 @@ void Tas_Id<N,compare>::ajout(N* newElem){
 template<class N, int compare(N,N)>
 N* Tas_Id<N,compare>::outMin(){
     std::swap(Tas<N,compare>::tas[0], Tas<N,compare>::tas[Tas<N,compare>::tas.size()-1]);
-    std::cout << "#######################################" << std::endl;
-    std::cout << *this << std::endl;
-    std::cout << "#######################################" << std::endl;
     N* result = Tas<N,compare>::tas[Tas<N,compare>::tas.size()-1];
     Tas<N,compare>::tas.erase(Tas<N,compare>::tas.end()-1);
     dico.erase(result);
     
+    dico[Tas<N,compare>::tas[0]] = 0;
     if (Tas<N,compare>::tas.size() > 2){
         int curNode = 0;
 
@@ -139,12 +131,9 @@ N* Tas_Id<N,compare>::outMin(){
 
 template<class N, int compare(N,N)>
 void Tas_Id<N,compare>::updateTas(N* updated){
-    std::cout << "#############UPDATE##################" << std::endl;
     int curId = dico[updated];
 
-    std::cout << "To update = ";
     std::cout << *updated << std::endl;
-    std::cout << "index = " << curId << std::endl;
 
     int curParent = (curId - 1) / 2;
 

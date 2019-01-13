@@ -44,9 +44,10 @@ void Dijkstra(Graph<I,int>* graph, Noeud<I,int>* src){
 	ourPairs< Noeud<I,int>*, int>* choice;
 	//std::tr1::tuple<Noeud<I,int>*,int>* choice;
 
-	int i = 0;
 	while(!tas_id.isEmpty()){
+		std::cout << "###### Etat du tas (lol tata)###########" << std::endl;
 		std::cout << tas_id << std::endl;
+		std::cout << "########################################" << std::endl;
 		//std::cout << i << "[BEFORE] TAS : " << tas_id.getSize() << " | DICO : " << tas_id.getSizeDico() << std::endl;
 		choice = tas_id.outMin(); // c'est bien un ourPairs
 		//std::cout << i << "[AFTER] TAS : " << tas_id.getSize() << " | DICO : " << tas_id.getSizeDico() << std::endl;
@@ -58,7 +59,7 @@ void Dijkstra(Graph<I,int>* graph, Noeud<I,int>* src){
 		int poidMin = choice->second; // Ca on arrive à le recup
 		std::cout << "Poid : " << poidMin << std::endl;
 
-		std::cout << i << "****Traitement de ";
+		std::cout << "****Traitement de ";
 		std::cout << *noeudMin << std::endl;
 		
 		result[noeudMin] = poidMin;
@@ -80,16 +81,7 @@ void Dijkstra(Graph<I,int>* graph, Noeud<I,int>* src){
 				//std::cout << "**On change la valeur de ce voisin" << std::endl;
 			}
 
-		}/*
-		for (typename std::vector<std::pair<Noeud<I,int>*, int> >::iterator it = (choice->first)->getNeighbours().begin(); it != choice->first->getNeighbours().end(); it++){
-			std::cout << "IN FOR getNeighbours" << std::endl;
-			std::pair<Noeud<I,int>*, int>* curTuple = tmp[it->first];
-			if (curTuple->second > it->second + choice->second){
-				choice->second = it->second + choice->second;
-				tas_id.updateTas(curTuple);
-			}
-		}*/
-		i++;
+		}
 	}
 
 	for (typename std::map<Noeud<I,int>*, int>::iterator it = result.begin(); it != result.end(); it++){
