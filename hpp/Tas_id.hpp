@@ -7,28 +7,31 @@
 template<class N, int compare(N,N)>
 class Tas_Id : public Tas<N,compare>{
     private:
+        // Map qui associe à un l'élement son index dans le vector tas
         std::map<N*,int> dico;
 
     public:
+        // CONSTRUCTORS
         Tas_Id();
         Tas_Id(N*);
         Tas_Id(std::map<N*,int>);
         Tas_Id(std::vector<N*>);
-
+        // DESTRUCTOR
         ~Tas_Id();
 
+        // Recupère la map
         std::map<N*,int> getDico() const {return dico;}
-
-
+        // Permet d'ajouter un élément dans le tas
         void ajout(N*);
-
+        // Mets à jour l'élément N* dans le tas
         void updateTas(N*);
-
+        // Recupère la taille du tas
         int getSize() const { return Tas<N,compare>::tas.size(); }
+        // Recupère la taille du dico
         int getSizeDico() const { return dico.size(); }
-
+        // Recupère le plus petit élément du tas
         N* outMin();
-
+        // Surcharge de l'opérateur <<
         template<class N2, int comp(N2,N2)>
             friend std::ostream& operator << (
                 std::ostream &os,
@@ -64,6 +67,12 @@ Tas_Id<N,compare>::~Tas_Id(){
     
 }
 
+
+/*
+    Surchaege de ajout() de la classe mère Tas
+    On ajoute un élément id au tas à la fin puis on rééquilibre celui-ci
+    On ajoute aussi l'élement et son index dans la map dico
+*/
 template<class N, int compare(N,N)>
 void Tas_Id<N,compare>::ajout(N* newElem){
     Tas<N,compare>::tas.push_back(newElem);
@@ -89,6 +98,11 @@ void Tas_Id<N,compare>::ajout(N* newElem){
 
 }
 
+
+/*
+    On recupère la racine puis on l'échange de place avec le dernier élément. On supprime l'ancienne racine et on rééquilibre l'arbre
+    On supprime aussi l'élément dans la map dico et mets à jour les valeurs dans la map lors du rééquilibrage
+*/
 template<class N, int compare(N,N)>
 N* Tas_Id<N,compare>::outMin(){
     std::swap(Tas<N,compare>::tas[0], Tas<N,compare>::tas[Tas<N,compare>::tas.size()-1]);
@@ -129,15 +143,14 @@ N* Tas_Id<N,compare>::outMin(){
 }
 
 
+/*
+    Permet de mettre à jour un élément du tas. On utilise la map dico pour trouver cet élément et changer sa valeur pour on rééquilibre le tas et on met à jour la map dico
+*/
 template<class N, int compare(N,N)>
 void Tas_Id<N,compare>::updateTas(N* updated){
     int curId = dico[updated];
 
-    std::cout << *updated << std::endl;
-
     int curParent = (curId - 1) / 2;
-    std::cout << "\t Place : " << curId << std::endl;
-
 
     while(curParent >=0){
         if (compare(*Tas<N,compare>::tas[curId],*Tas<N,compare>::tas[curParent])){
@@ -153,7 +166,6 @@ void Tas_Id<N,compare>::updateTas(N* updated){
         }
     }
 
-    std::cout << "\t New place : " << dico[Tas<N,compare>::tas[curId]] << std::endl;
 }
 
 
