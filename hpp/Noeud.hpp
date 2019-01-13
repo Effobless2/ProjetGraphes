@@ -48,7 +48,6 @@ Noeud<I,C>::~Noeud(){
 template<class I, class C>
 void Noeud<I,C>::addPath(Noeud<I,C>* node, C cost){
     this->neighbours.push_back( std::make_pair(node, cost) ) ;
-    std::cout << this->get_numero() << " vers " << node->get_numero() << " = " << cost << std::endl;
 }
 
 template<class I, class C>
@@ -72,7 +71,7 @@ std::ostream& operator << (std::ostream &os,const Noeud<I,C> &node){
     for( typename std::vector< std::pair< Noeud<I,C>*, C > >::iterator it = vec.begin() ; it != vec.end() ; it++){
         os << " \r{ " << (it->first)->get_numero() << " : " << it->second << "} \n";
     }
-    
+
     os << "}" << std::endl;
     return os;
 }
