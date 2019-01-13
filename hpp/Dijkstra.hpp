@@ -8,82 +8,79 @@
 #include <iostream>
 #include <map>
 
+/*
+	Applique l'algorithme de dijkstra depuis un noeud src sur un graphe graph
+	Affiche les plus courts chemins
+*/
 
 template<class I>
 void Dijkstra(Graph<I,int>* graph, Noeud<I,int>* src){
 
+	// Valeur définie pour l'initialisation des noeuds dans l'algorithme
 	int INFINITY = 100000;
 
-	std::cout << "***** INIT *****" << std::endl;
-	// Map (Noeud, distance) des résultats de l'algo
+	// Map (Noeud, distance) : les résultats qu'on affichera
 	std::map<Noeud<I,int>*, int> result = std::map<Noeud<I,int>*,int>();
 
+	// Map temporaire 
 	std::map< Noeud<I,int>*, ourPairs<Noeud<I,int>*, int>* > tmp = std::map< Noeud<I,int>*, ourPairs<Noeud<I,int>*, int>* >(); 
 
+	// Tas contenant des paires (Noeud, distance) à traiter lors de l'algorithme
 	Tas_Id< ourPairs<Noeud<I,int>*, int>, pairCompare> tas_id = Tas_Id< ourPairs<Noeud<I,int>*, int>, pairCompare >();
 	
+	// Boucle afin d'initialiser les noeuds du graphe dans l'algorithme de Dijkstra
 	std::vector< Noeud<I, int>* > nodes = graph->getNodes();
 	for (typename std::vector<Noeud<I,int>*>::iterator it = nodes.begin(); it != nodes.end(); it++){
-		//std::cout << "\nTAS : " << tas_id.getSize() << " | DICO : " << tas_id.getSizeDico() << std::endl;
+		// Si on a le noeud src on met son coût à 0 pour le traiter en premier, sinon on met les noeuds à un coût infini
 		if (*it == src){
 			ourPairs<Noeud<I,int>*, int>* curPair = new ourPairs<Noeud<I,int>*, int>(*it, 0);
 			tmp[*it] = curPair;
 			tas_id.ajout(curPair);
-			std::cout << "Ajout dans le tas de " << (*it)->get_numero() << " : " << "0" << std::endl;
 
 		} else{
 			ourPairs<Noeud<I,int>*, int>* curPair = new ourPairs<Noeud<I,int>*, int>(*it, INFINITY);
 			tmp[*it] = curPair;
 			tas_id.ajout(curPair);
-			std::cout << "Ajout dans le tas de " << (*it)->get_numero() << " : " << INFINITY << std::endl;
 		}
 		
 	}
 
-
+	// Représente le noeud le plus proche de source dans l'algorithme
 	ourPairs< Noeud<I,int>*, int>* choice;
-	//std::tr1::tuple<Noeud<I,int>*,int>* choice;
 
+	// Tant que le tas n'est pas vide, on applique l'algorithme
 	while(!tas_id.isEmpty()){
-		std::cout << "###### Etat du tas (lol tata)###########" << std::endl;
-		std::cout << tas_id << std::endl;
-		std::cout << "########################################" << std::endl;
-		//std::cout << i << "[BEFORE] TAS : " << tas_id.getSize() << " | DICO : " << tas_id.getSizeDico() << std::endl;
-		choice = tas_id.outMin(); // c'est bien un ourPairs
-		//std::cout << i << "[AFTER] TAS : " << tas_id.getSize() << " | DICO : " << tas_id.getSizeDico() << std::endl;
+		// On extrait le noeud le plus proche de source du tas
+		choice = tas_id.outMin();
 
-
-		//Noeud<I, int>* noeudMin = std::tr1::get<0>(*choice);
+		// Représente le noeud dans la paire extraite
 		Noeud<I, int>* noeudMin = choice->first;
-		//int poidMin = std::tr1::get<1>(*choice);
-		int poidMin = choice->second; // Ca on arrive à le recup
-
-		std::cout << "****Traitement de ";
-		std::cout << *noeudMin << std::endl;
+		// Représente le poid dans la paire extraite (la distance entre le noeud source et celui extrait)
+		int poidMin = choice->second;
 		
+		// On stocke le noeud et le poid extrait dans les résultats à afficher
 		result[noeudMin] = poidMin;
-		
+
+		// On recupère les voisins du Noeud extrait afin de mettre à jour les distances si nécessaire
 		std::vector< std::pair<Noeud<I,int>*, int> > voisinsMin = noeudMin->getNeighbours();
-
-		//std::cout << "***Traitement des voisins" << std::endl;
-
 		for( typename std::vector< std::pair<Noeud<I,int>*, int> >::iterator it = voisinsMin.begin(); it != voisinsMin.end(); it++){
-			std::cout << "**Traitement du voisin ";
+			// Représent le noeud voisin traité
 			Noeud<I, int>* noeudVoisin = (*it).first;
 
+			// On recupère la paire du noeud depuis tmp
 			ourPairs<Noeud<I,int>*, int>* tupleVoisin = tmp[(*it).first];
 
-			std::cout << "**Voisin " << noeudVoisin->get_numero() << " : " << (*tupleVoisin).second <<std::endl;
-
+			// Si la distance est plus petite alors on met à jour, sinon rien
 			if (tupleVoisin->second > it->second + choice->second){
 				tupleVoisin->second = it->second + choice->second;
 				tas_id.updateTas(tupleVoisin);
-				//std::cout << "**On change la valeur de ce voisin" << std::endl;
 			}
 
 		}
 	}
 
+	// On affiche les plus courts chemins du noeud src vers les autres noeuds
+	std::cout << "Voici les plus courts chemins (Sommet : Distance) " << std::endl;
 	for (typename std::map<Noeud<I,int>*, int>::iterator it = result.begin(); it != result.end(); it++){
 		std::cout << ((*it).first)->get_numero() << " : " << (*it).second << std::endl;
 		delete tmp[it->first];
