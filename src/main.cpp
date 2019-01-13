@@ -42,7 +42,7 @@ int main(){
     subject->addPath(nodeG, nodeI, 6);
     subject->addPath(nodeI, nodeH, 7);
 
-    std::cout << *subject << std::endl;
+    std::cout << "Le graphe : " << *subject << std::endl;
 
     Dijkstra<char>(subject, nodeA);
 
