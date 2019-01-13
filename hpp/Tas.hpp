@@ -9,22 +9,27 @@
 template<class N, int compFunction(N,N)>
 class Tas{
     protected:
+        // Vector qui représente le tas
         std::vector<N*> tas;
     public:
+        // CONSTRUCTORS
         Tas();
         Tas(N*);
         Tas(std::vector<N*>);
-
+        // DESTRUCTOR
         ~Tas();
 
+        // Recupère le tas
         std::vector<N*> getTas() const {return tas;}
-
+        // Ajoute un élément dans le tas
         virtual void ajout(N*);
+        // Retourne le plus petit élément du tas (la racine)
         virtual N* outMin();
+        // Recherche si l'élément est présent dans le tas
         bool recherche(N*);
-
+        // Observe si le tas est vide ou non
         bool isEmpty();
-
+        // Surcharge de l'opérateur <<
         template<class N2, int comp(N2,N2)>
             friend std::ostream& operator << (
                 std::ostream &os,
@@ -52,18 +57,19 @@ Tas<N,compFunction>::Tas(std::vector<N*> _tas){
 
 
 template<class N, int compFunction(N,N)>
-Tas<N,compFunction>::~Tas(){/*
-    for (typename std::vector<N*>::iterator it = tas.begin(); it != tas.end(); it++){
-        delete *it;
-    }*/
+Tas<N,compFunction>::~Tas(){
+
 }
 
+
+/*
+    On ajoute un élément id au tas à la fin puis on rééquilibre celui-ci
+*/
 template<class N, int compFunction(N,N)>
 void Tas<N,compFunction>::ajout(N* id){
     tas.push_back(id);
 
     int curId = tas.size() - 1;
-
     int curParent = (curId - 1) / 2;
 
 
@@ -77,21 +83,12 @@ void Tas<N,compFunction>::ajout(N* id){
             break;
         }
     }
-
-    /*
-    std::vector<N*>::iterator curId = tas.end()-1;
-    std::vector<N*>::iterator it = (curId - 1)/2;
-    while(it >= tas.begin()){
-        if (**it > *id){
-            std::swap(*curId, *it);
-            curId = it;
-        }
-        else{
-            it = 
-        }
-    }*/
 }
 
+
+/*
+    On recupère la racine puis on l'échange de place avec le dernier élément. On supprime l'ancienne racine et on rééquilibre l'arbre
+*/
 template<class N, int compFunction(N,N)>
 N* Tas<N,compFunction>::outMin(){
     std::swap(tas[0], tas[tas.size()-1]);
@@ -127,11 +124,7 @@ N* Tas<N,compFunction>::outMin(){
     
     return result;
 }
-/*
-template<class N>
-N* outMin(){
-    return tas[0];
-}*/
+
 
 template<class N, int compFunction(N,N)>
 bool Tas<N,compFunction>::recherche(N* toFind){
@@ -154,6 +147,7 @@ std::ostream& operator << (std::ostream &os, const Tas<N, compFunction> &tas){
     os << std::endl;
     return os;
 }
+
 
 template<class N, int compFunction(N,N)>
 bool Tas<N, compFunction>::isEmpty(){
