@@ -7,22 +7,30 @@
 template<class I, class C>
 class Graph{
     private:
+        // Vector des noeuds du graphe
         std::vector<Noeud<I,C>*> nodes;
 
     public:
+        // CONSTRUCTORS
         Graph();
         Graph(std::vector<Noeud<I,C>*> nodes);
         Graph(Noeud<I,C>* node);
+        // DESTRUCTOR
         ~Graph();
 
-        std::vector<Noeud<I,C>*> getNodes() const {return nodes;}
-
+        // Recupère les noeuds du graphe
+        std::vector<Noeud<I,C>*> getNodes() const { return nodes; }
+        // Ajouter un noeud dans le graphe
         void addNoeud(Noeud<I,C> *node);
+        // Retirer un noeud dans le graphe
         void removeNoeud(Noeud<I,C>* node);
+        // Retirer une arête du graphe
         void removePath(Noeud<I,C>*, Noeud<I,C>*);
+        // Ajouter une arête dans le graph des noeuds begin à end avec un coût de cost
         void addPath(Noeud<I,C>* begin, Noeud<I,C>* end, C cost);
-
+        // Affiche le graphe
         void affiche();
+        // Surcharge de l'opérateur <<
         template <class I2, class C2>
             friend std::ostream& operator << (
                 std::ostream &os, 
